@@ -1,4 +1,27 @@
 .tarea_input{
-	border: none;
-	width: 100%;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+
+	white-space: nowrap;
+ 	overflow: hidden;
+ 	text-overflow: ellipsis;
+ 	width: 100%;
+
 }
+
+.tarea_input:disabled{
+	background-color: #ffffff;
+}
+
+.importante{
+	color: #ff6666;
+	
+}
+
+.tarea_importante{
+	background-color: #ff6666;
+	
+}
+
+
