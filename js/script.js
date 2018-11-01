@@ -1,17 +1,38 @@
+let listaTareas;
+
 $(document).ready(function(){  
 var id_tarea;
 var tarea;
-	if (localStorage.getItem("tarea")  == '') {
-		localStorage.setItem("tarea", "");
-		localStorage.setItem("contador", 0);
+
+
+	listaTareas = localStorage.getItem('id_tarea');
+
+	for (var i = 1; i <= listaTareas ; i++) {
+		 //console.log('tarea ' + i + ' - ' + localStorage.getItem('tarea'+[i]));	
+		 var myObj = JSON.parse(localStorage.getItem('tarea'+[i]));
+		 console.log('descripcion ' + i + ' - ' + myObj["descripcion"]);	
+		 agregarItems(myObj["descripcion"]);
 	}
+
+	 //console.log('tarea '+ localStorage.getItem('tarea1'));	
+
 
  
 
 		$("#agregar-tarea").click(function(e){
 			e.preventDefault();
-			$( "#panel-tareas" ).append( '<tr > <td ><a class="completo" href="#"><i class="far fa-check-circle"></i></a></td>'
-					      					+ '<td><input type="text" name="" class="tarea_input" data-toggle="tooltip" data-placement="top" ></td>'
+			agregarItems('');
+		       			
+		});
+
+
+});
+
+function agregarItems(valor){
+
+
+	$( "#panel-tareas" ).append( '<tr > <td ><a class="completo" href="#"><i class="far fa-check-circle"></i></a></td>'
+					      					+ '<td><input type="text" name="" class="tarea_input" value="' + valor + '" data-toggle="tooltip" data-placement="top" ></td>'
 					      					
 					      					+ '<td>' + moment().format("DD/MM/YYYY HH:mm") + '</td>'
 					      					
@@ -22,11 +43,9 @@ var tarea;
 					      					+ '<td><a href="#" class="importante"><i class="fas fa-exclamation"></i></a></td> </tr>' );
 			
 			console.log("agregar tarea");
-		       			
-		});
 
 
-});
+}
 
 
 $(document).on('click', '.eliminar', function(e){
@@ -60,14 +79,27 @@ $(document).on('keypress ', '.tarea_input', function(event){
 	       id_tarea = Number(localStorage.getItem("id_tarea")) + 1;
 	       console.log("tarea " + id_tarea)
 
-	       tarea = { "id" : id_tarea, "descripcion": contenido, "importante":false}
+	       tarea = {  "descripcion": contenido, "importante":false};
+
+	       
 
 
 	      localStorage.setItem("id_tarea", id_tarea);
-	      localStorage.setItem('tarea', JSON.stringify(tarea));
-	      var getObject = JSON.parse(localStorage.getItem('tarea'));
-	      console.log("localstorage " + getObject);
-	      //$( this ).parent().prop('id', id_tarea);
+	      localStorage.setItem('tarea'+ id_tarea, JSON.stringify(tarea));
+	      
+	     // var getObject = localStorage.getItem('tarea');      
+	      //console.log("localstorage " + getObject);
+
+	     // var myObj = JSON.parse(localStorage.getItem("tarea"));
+
+	     // myObj["descripcion"] = "nueva descripcion";
+
+	    //  console.log("descripcion " + myObj["descripcion"]);
+
+	      
+
+	    
+	      
 	      $( this ).closest('tr').attr("id",id_tarea);
 	    }
 });
